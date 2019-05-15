@@ -1,0 +1,100 @@
+package joptsimple.util;
+
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import joptsimple.ValueConversionException;
+import joptsimple.ValueConverter;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class DateConverter
+  implements ValueConverter<Date>
+{
+  private final DateFormat formatter;
+  
+  public DateConverter(DateFormat formatter)
+  {
+    if (formatter == null) {
+      throw new NullPointerException("illegal null formatter");
+    }
+    this.formatter = formatter;
+  }
+  
+
+
+
+
+
+
+
+
+  public static DateConverter datePattern(String pattern)
+  {
+    SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+    formatter.setLenient(false);
+    
+    return new DateConverter(formatter);
+  }
+  
+  public Date convert(String value) {
+    ParsePosition position = new ParsePosition(0);
+    
+    Date date = formatter.parse(value, position);
+    if (position.getIndex() != value.length()) {
+      throw new ValueConversionException(message(value));
+    }
+    return date;
+  }
+  
+  public Class<Date> valueType() {
+    return Date.class;
+  }
+  
+  public String valuePattern() {
+    return (formatter instanceof SimpleDateFormat) ? ((SimpleDateFormat)formatter).toPattern() : "";
+  }
+  
+
+  private String message(String value)
+  {
+    String message = "Value [" + value + "] does not match date/time pattern";
+    if ((formatter instanceof SimpleDateFormat)) {
+      message = message + " [" + ((SimpleDateFormat)formatter).toPattern() + ']';
+    }
+    return message;
+  }
+}

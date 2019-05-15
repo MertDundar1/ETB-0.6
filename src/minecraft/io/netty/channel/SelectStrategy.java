@@ -1,0 +1,12 @@
+package io.netty.channel;
+
+import io.netty.util.IntSupplier;
+
+public abstract interface SelectStrategy
+{
+  public static final int SELECT = -1;
+  public static final int CONTINUE = -2;
+  
+  public abstract int calculateStrategy(IntSupplier paramIntSupplier, boolean paramBoolean)
+    throws Exception;
+}

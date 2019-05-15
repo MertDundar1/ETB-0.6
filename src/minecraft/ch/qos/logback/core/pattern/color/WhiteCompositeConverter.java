@@ -1,0 +1,28 @@
+package ch.qos.logback.core.pattern.color;
+
+
+
+
+
+
+
+
+
+public class WhiteCompositeConverter<E>
+  extends ForegroundCompositeConverterBase<E>
+{
+  public WhiteCompositeConverter() {}
+  
+
+
+
+
+
+
+
+
+  protected String getForegroundColorCode(E event)
+  {
+    return "37";
+  }
+}
